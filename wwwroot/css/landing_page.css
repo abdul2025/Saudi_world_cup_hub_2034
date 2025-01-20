@@ -1,0 +1,138 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+.hero {
+    background-image: url('https://fifa34wc.oss-me-central-1.aliyuncs.com/wp-content/uploads/2024/07/11806-1.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+}
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+}
+.hero p {
+    font-size: 1.25rem;
+}
+.section {
+    padding: 50px 0;
+}
+.section h2 {
+    font-size: 2.5rem;
+    color: #007bff;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+.footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+
+/* General Styles */
+.countdown-section {
+    background: linear-gradient(135deg, #ff7a00, #ff2a68);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 50px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.countdown-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: titleFadeIn 1s ease-in-out;
+}
+
+.countdown {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 5px;
+    background: rgba(180, 180, 180, 0.6);
+    padding: 20px;
+    display: inline-block;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    animation: countdownFadeIn 2.5s ease-out;
+}
+
+.countdown span {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffea00;
+}
+
+/* Pulsing animation for the countdown */
+@keyframes titleFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes countdownFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Additional Animation for Countdown Digits */
+.countdown span {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        color: #3e3e3d;
+    }
+    50% {
+        transform: scale(1.1);
+        color: #666664;
+    }
+    100% {
+        transform: scale(1);
+        color: #484846;
+    }
+}
+
+
+
+.hover-effect-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.hover-effect-card:hover {
+    transform: scale(1.05); /* Slightly enlarge the card */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+}
+
+
+
+
