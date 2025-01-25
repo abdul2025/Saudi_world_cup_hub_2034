@@ -1,0 +1,205 @@
+@model IEnumerable<SaudiWorldCupHub.Models.Nationalitis>
+
+@{
+    ViewData["Title"] = "Nationalities";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="container mt-5">
+        <h2>Nationalities Management</h2>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createNationalityModal">Add Nationality</button>
+        <table class="table table-bordered" id="nationalitiesTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var nationality in Model)
+                {
+                    <tr>
+                        <td>@nationality.Id</td>
+                        <td>@nationality.Name</td>
+                        <td>@nationality.Code</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm edit-nationality"
+                                    data-id="@nationality.Id"
+                                    data-name="@nationality.Name"
+                                    data-code="@nationality.Code"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#updateNationalityModal">Edit</button>
+                            <button class="btn btn-danger btn-sm delete-nationality" data-id="@nationality.Id" data-bs-toggle="modal" data-bs-target="#deleteNationalityModal">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Create Nationality Modal -->
+    <div class="modal fade" id="createNationalityModal" tabindex="-1" aria-labelledby="createNationalityModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createNationalityModalLabel">Add Nationality</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createNationalityForm">
+                        <div class="mb-3">
+                            <label for="nationalityName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="nationalityName" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="nationalityCode" class="form-label">Code</label>
+                            <input type="text" class="form-control" id="nationalityCode" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Nationality</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Nationality Modal -->
+    <div class="modal fade" id="updateNationalityModal" tabindex="-1" aria-labelledby="updateNationalityModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateNationalityModalLabel">Update Nationality</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateNationalityForm">
+                        <input type="hidden" id="updateNationalityId" />
+                        <div class="mb-3">
+                            <label for="updateNationalityName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="updateNationalityName" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateNationalityCode" class="form-label">Code</label>
+                            <input type="text" class="form-control" id="updateNationalityCode" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Nationality</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Nationality Modal -->
+    <div class="modal fade" id="deleteNationalityModal" tabindex="-1" aria-labelledby="deleteNationalityModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteNationalityModalLabel">Delete Nationality</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this nationality with ID: <span id="deleteNationalityIdDisplay"></span>?</p>
+                    <form id="deleteNationalityForm">
+                        <input type="hidden" id="deleteNationalityId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Populate Edit Modal
+            $(document).on('click', '.edit-nationality', function () {
+                $('#updateNationalityId').val($(this).data('id'));
+                $('#updateNationalityName').val($(this).data('name'));
+                $('#updateNationalityCode').val($(this).data('code'));
+            });
+
+            // Populate Delete Modal
+            $(document).on('click', '.delete-nationality', function () {
+                const id = $(this).data('id');
+                console.log("id createNationalityForm createNationalityForm createNationalityForm createNationalityForm createNationalityForm createNationalityForm ")
+                console.log(id)
+                $('#deleteNationalityId').val(id); // Hidden input for form submission
+                $('#deleteNationalityIdDisplay').text(id); // Display ID in the modal text
+            });
+
+            // Handle Create Nationality
+            $('#createNationalityForm').submit(function (e) {
+                e.preventDefault();
+                const nationality = {
+                    Name: $('#nationalityName').val(),
+                    Code: $('#nationalityCode').val()
+                };
+
+                $.ajax({
+                    url: '/Dashboard/CreateNationalities',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(nationality),
+                    success: function (response) {
+                        location.reload();
+                    }
+                });
+            });
+
+            // Handle Update Nationality
+            $('#updateNationalityForm').submit(function (e) {
+                e.preventDefault();
+                const nationality = {
+                    Id: $('#updateNationalityId').val(),
+                    Name: $('#updateNationalityName').val(),
+                    Code: $('#updateNationalityCode').val()
+                };
+
+                $.ajax({
+                    url: '/Dashboard/UpdateNationalities',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(nationality),
+                    success: function (response) {
+                        location.reload();
+                    }
+                });
+            });
+
+            $('#deleteNationalityForm').submit(function (e) {
+                e.preventDefault();
+
+                const id = parseInt($('#deleteNationalityId').val(), 10); // Convert to integer
+
+                console.log("ID to delete:", id);
+
+                $.ajax({
+                    url: '/Dashboard/DeleteNationalities',
+                    type: 'POST',
+                    contentType: 'application/json', // Sending JSON
+                    data: JSON.stringify(id), // Sending a plain integer as JSON
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message); // Notify the user of success
+                            location.reload();
+                        } else {
+                            alert(response.message); // Notify the user of the error
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX Error:", error);
+                        alert("An unexpected error occurred!");
+                    }
+                });
+            });
+
+        });
+
+    </script>
+}

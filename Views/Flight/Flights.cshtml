@@ -1,0 +1,174 @@
+@using SaudiWorldCupHub.DTO
+@{
+    ViewData["Title"] = "Flights";
+    var cities = ViewBag.Cities;
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="card-title text-center mb-4">Amadeus Flights API UAT</h2>
+            <p class="card-title text-center mb-4">Avaliable searching option only OneWay Flights, more Enhancement are coming </p>
+
+            <!-- Card with shadow and rounded corners -->
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="card-title text-center mb-4">Search Flights</h2>
+
+                    <!-- Search Form -->
+                    <form id="flightSearchForm" asp-action="SearchFlights" method="post" class="needs-validation">
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-center">
+                                <!-- Icon for One Way -->
+                                <div class="form-check form-check-inline">
+                                    <input 
+                                        type="radio" 
+                                        id="oneWay" 
+                                        name="TripType" 
+                                        class="form-check-input custom-radio-icon" 
+                                        value="OneWay" 
+                                        checked 
+                                        onchange="toggleReturnDate(false)">
+                                    <label class="form-check-label" for="oneWay">
+                                        <i class="bi bi-arrow-right-circle" style="font-size: 1.5rem;"></i>
+                                        <br>One Way
+                                    </label>
+                                </div>
+
+                                <!-- Icon for Round Trip -->
+                                <div class="form-check form-check-inline ms-3">
+                                    <input 
+                                        type="radio" 
+                                        id="roundTrip" 
+                                        name="TripType" 
+                                        class="form-check-input custom-radio-icon" 
+                                        value="RoundTrip" 
+                                        onchange="toggleReturnDate(true)" 
+                                        disabled>
+                                    <label class="form-check-label" for="roundTrip">
+                                        <i class="bi bi-arrow-repeat" style="font-size: 1.5rem;"></i>
+                                        <br>Round Trip
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <!-- Departure City (Dropdown) -->
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0"><i
+                                            class="bi bi-geo-alt"></i></span>
+                                    <select name="DepartureCity" class="form-select border-0 shadow-sm rounded-3"
+                                        required>
+                                        <option value="" disabled selected>Select Departure City</option>
+                                        @foreach (var city in cities)
+                                        {
+                                            <option value="@city.Code">@city.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Arrival City (Dropdown) -->
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0"><i
+                                            class="bi bi-pin-map"></i></span>
+                                    <select name="ArrivalCity" class="form-select border-0 shadow-sm rounded-3"
+                                        required>
+                                        <option value="" disabled selected>Select Arrival City</option>
+                                        @foreach (var city in cities)
+                                        {
+                                            <option value="@city.Code">@city.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Departure Date -->
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0"><i
+                                            class="bi bi-calendar-event"></i></span>
+                                    <input type="date" name="DepartureDate"
+                                        class="form-control border-0 shadow-sm rounded-3" required>
+                                </div>
+                            </div>
+
+                            <!-- Return Date -->
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0"><i
+                                            class="bi bi-calendar-event-fill"></i></span>
+                                    <input type="date" name="ReturnDate" id="returnDate"
+                                        class="form-control border-0 shadow-sm rounded-3" disabled>
+                                </div>
+                            </div>
+
+                            <!-- Passengers -->
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0"><i class="bi bi-people"></i></span>
+                                    <input type="number" name="Passengers"
+                                        class="form-control border-0 shadow-sm rounded-3" placeholder="Passengers"
+                                        min="1" value="1" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="submit" class="btn btn-lg px-5 rounded-pill shadow-sm"
+                                style="background-color: #a6c3dc;">
+                                Search Flights
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spinner (Initially hidden using Bootstrap d-none class) -->
+    <div id="spinner" class="d-none d-flex justify-content-center mt-4">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Flight Offers Results Section -->
+    <div id="flightResults" class="mt-4"></div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // AJAX form submission
+        $('#flightSearchForm').submit(function (event) {
+            event.preventDefault();  // Prevent the default form submission
+
+            // Show the spinner and hide the results
+            $('#spinner').removeClass('d-none').addClass('d-flex');  // Show the spinner
+            $('#flightResults').hide();  // Optionally hide the results section while loading
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SearchFlights", "Flight")',  // Adjust the URL to your controller action
+                data: $(this).serialize(),
+                success: function (data) {
+                    // Update the flight results section with the new data
+                    $('#flightResults').html(data);
+                    $('#flightResults').show();  // Show the results section
+                },
+                error: function () {
+                    alert('Error occurred while searching for flights.');
+                },
+                complete: function() {
+                    // Hide the spinner using Bootstrap's d-none class
+                    $('#spinner').removeClass('d-flex').addClass('d-none');
+                }
+            });
+        });
+    </script>
+}

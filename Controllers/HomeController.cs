@@ -30,11 +30,7 @@ public class HomeController : Controller
     }
 
 
-    [Authorize]
-    public IActionResult Flights()
-    {
-        return View();
-    }
+
 
     [Authorize]
     public IActionResult Hotels()

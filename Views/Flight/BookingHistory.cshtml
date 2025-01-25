@@ -1,0 +1,51 @@
+@model List<SaudiWorldCupHub.Models.Bookings>
+
+@{
+    ViewData["Title"] = "Booking History";
+}
+
+
+<div class="container mt-5">
+    <h2 class="text-center">Your Booking History</h2>
+    <p class="lead">Dear @ViewData["UserName"]</p>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-warning text-center">
+            You have no bookings yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Booking Reference</th>
+                        <th>Confirmation ID</th>
+                        <th>Departure City</th>
+                        <th>Arrival City</th>
+                        <th>Departure Date</th>
+                        <th>Arrival Date</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model)
+                    {
+                        <tr>
+                            <td>@booking.Reference</td>
+                            <td>@booking.ConfirmId</td>
+                            <td>@booking.DepartureCity</td> <!-- Display Departure City -->
+                            <td>@booking.ArrivalCity</td> <!-- Display Arrival City -->
+                            <td>@booking.DepartureAt.ToString("dd/MM/yyyy")</td>
+                            <td>@booking.ArrivalAt.ToString("dd/MM/yyyy")</td>
+                            <td>@booking.Total.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+

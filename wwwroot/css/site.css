@@ -30,3 +30,42 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.nav-link {
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 10%;
+}
+
+.nav-link:hover {
+  background-color: #f8f9fa;
+}
+
+.nav-link.active {
+  background-color: #c6c6c7;
+  color: rgb(27, 27, 27) !important;
+}
+
+
+
+.custom-radio-icon {
+  display: none;
+}
+
+.custom-radio-icon:checked + .form-check-label i {
+  color: #007bff; /* Blue color for the selected icon */
+}
+
+.form-check-label {
+  font-size: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+  color: #495057;
+}
+
+.form-check-inline {
+  margin-right: 30px;
+}
+
+.form-check-label i {
+  transition: color 0.3s ease;
+}

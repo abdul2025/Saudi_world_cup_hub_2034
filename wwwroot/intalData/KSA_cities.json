@@ -1,0 +1,27 @@
+{
+    "Cities": [
+      {"Name": "Al Ula", "Code": "AU"},
+      {"Name": "Neom", "Code": "NEO"},
+      {"Name": "Riyadh", "Code": "RUH"},
+      {"Name": "Jeddah", "Code": "JED"},
+      {"Name": "Mecca", "Code": "MKK"},
+      {"Name": "Medina", "Code": "MED"},
+      {"Name": "Dammam", "Code": "DMM"},
+      {"Name": "Khobar", "Code": "KHB"},
+      {"Name": "Buraidah", "Code": "BUR"},
+      {"Name": "Abha", "Code": "ABH"},
+      {"Name": "Tabuk", "Code": "TUU"},
+      {"Name": "Khamis Mushait", "Code": "KMH"},
+      {"Name": "Jizan", "Code": "JIZ"},
+      {"Name": "Najran", "Code": "NAJ"},
+      {"Name": "Hail", "Code": "HIL"},
+      {"Name": "Al Khobar", "Code": "KHO"},
+      {"Name": "Yanbu", "Code": "YNB"},
+      {"Name": "Sakaka", "Code": "SKK"},
+      {"Name": "Al Hofuf", "Code": "HFU"},
+      {"Name": "Dhahran", "Code": "DHR"},
+      {"Name": "Qassim", "Code": "QSM"},
+      {"Name": "Al Bahah", "Code": "BAH"}
+    ]
+  }
+  

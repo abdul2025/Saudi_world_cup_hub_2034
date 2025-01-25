@@ -1,0 +1,62 @@
+@model SaudiWorldCupHub.Models.Bookings
+
+@{
+    ViewData["Title"] = "Booking Confirmation";
+}
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow-lg p-4">
+                <div class="card-header text-center">
+                    <h2>Booking Confirmation</h2>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Dear @ViewData["UserName"],</p>
+                    <p>Your booking has been confirmed! Below are the details:</p>
+
+                    <div class="mb-3">
+                        <h4>Booking Details</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Booking Reference:</strong> @Model.Reference</p>
+                                <p><strong>Booking Confirmation ID:</strong> @Model.ConfirmId</p>
+                                <p><strong>Creation Date:</strong> @Model.CreationDate</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Departure Date:</strong> @Model.DepartureAt</p>
+                                <p><strong>Arrival Date:</strong> @Model.ArrivalAt</p>
+                                <p><strong>Currency:</strong> @Model.Currency</p>
+                                <p><strong>Total:</strong> @Model.Total</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Departure and Arrival Cities -->
+                    <div class="mb-3">
+                        <p><strong>Departure City:</strong> @Model.DepartureCity</p>
+                        <p><strong>Arrival City:</strong> @Model.ArrivalCity</p>
+                    </div>
+
+                    <!-- Traveler Details -->
+                    <div class="mb-3">
+                        <h5>Traveler Details:</h5>
+                        <ul class="list-group">
+                            @foreach (var traveler in Model.Travelers)
+                            {
+                                <li class="list-group-item">
+                                    <strong>@traveler.Name</strong> (Gender: @traveler.Gender, DOB: @traveler.DateOfBirth.ToShortDateString())
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="@Url.Action("Flights", "Flight")" class="btn btn-primary">Back to Flights Search</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

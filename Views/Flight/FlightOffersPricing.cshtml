@@ -1,0 +1,235 @@
+@{
+    ViewData["Title"] = "Passanger Info";
+}
+
+</style>
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <!-- Row for Price, Traveler Count, and Airline Codes -->
+            <div class="row ">
+                <div class="col-md-4">
+                    <h5 class="text-primary">Price</h5>
+                    <p><strong>@ViewBag.totalPrice @ViewBag.currency</strong></p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="text-primary">Travelers</h5>
+                    <p><strong>@ViewBag.travelerCount</strong></p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="text-primary">Airline</h5>
+                    <ul class="list-group">
+                        @foreach (var code in ViewBag.airlineCodesList as List<string>)
+                        {
+                            <li class="list-group-item">@code</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Row for Departure and Arrival Details -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h5 class="text-primary">Departure</h5>
+                    <ul class="list-group">
+                        @foreach (var departure in ViewBag.departureDetails as List<(string IataCode, string Terminal, string DepartureTime)>)
+                        {
+                            <li class="list-group-item">
+                                <strong>Terminal:</strong> @departure.Terminal, 
+                                <strong>Time:</strong> @departure.DepartureTime
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-primary">Arrival</h5>
+                    <ul class="list-group">
+                        @foreach (var arrival in ViewBag.arrivalDetails as List<(string IataCode, string Terminal, string ArrivalTime)>)
+                        {
+                            <li class="list-group-item">
+                                <strong>Terminal:</strong> @arrival.Terminal, 
+                                <strong>Time:</strong> @arrival.ArrivalTime
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <!-- City and Country Codes (Departure and Arrival) -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        @foreach (var departure in ViewBag.departureDetails as List<(string IataCode, string Terminal, string DepartureTime)>)
+                        {
+                            @* Get city and country codes based on departure IATA code *@
+                            @if (ViewBag.cityCountryCodes.ContainsKey(departure.IataCode))
+                            {
+                                var cityCountry = ViewBag.cityCountryCodes[departure.IataCode];
+                                <li class="list-group-item">
+                                    <strong>City :</strong> @cityCountry.Item1, 
+                                    <strong>Country :</strong> @cityCountry.Item2
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        @foreach (var arrival in ViewBag.arrivalDetails as List<(string IataCode, string Terminal, string ArrivalTime)>)
+                        {
+                            @* Get city and country codes based on arrival IATA code *@
+                            @if (ViewBag.cityCountryCodes.ContainsKey(arrival.IataCode))
+                            {
+                                var cityCountry = ViewBag.cityCountryCodes[arrival.IataCode];
+                                <li class="list-group-item">
+                                    <strong>City :</strong> @cityCountry.Item1, 
+                                    <strong>Country :</strong> @cityCountry.Item2
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Passenger Information Form Card -->
+    <div class="card mt-2 shadow-lg">
+        <div class="card-header text-center">
+            <h3 class="mb-0">Passenger Information</h3>
+        </div>
+        <div class="card-body">
+        <form id="flightSearchForm" method="post" class="needs-validation">
+            @for (int i = 0; i < ViewBag.travelerCountInt; i++)
+            {
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0">Passenger @(i + 1)</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Row for First Name, Last Name, and Gender -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="FirstName_@i" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="FirstName_@i" name="Passengers[@i].FirstName" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="LastName_@i" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="LastName_@i" name="Passengers[@i].LastName" required />
+                            </div>
+                        </div>
+
+                        <!-- Row for Gender, Date of Birth, and Nationality -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="Gender_@i" class="form-label">Gender</label>
+                                <select class="form-control" id="Gender_@i" name="Passengers[@i].Gender" required>
+                                    <option value="MALE" selected>Male</option>
+                                    <option value="FEMALE">Female</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="PassportNationality_@i" class="form-label">Nationality</label>
+                                <select class="form-control" id="PassportNationality_@i" name="Passengers[@i].PassportNationality" required>
+                                    @foreach (var nationality in ViewBag.Nationalitis as List<Nationalitis>)
+                                    {
+                                        <option value="@nationality.Code">@nationality.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="DateOfBirth_@i" class="form-label">Date of Birth</label>
+                                <input type="date" class="form-control" id="DateOfBirth_@i" name="Passengers[@i].DateOfBirth" required />
+                            </div>
+                        </div>
+
+                        <!-- Passport Information -->
+                        <h5 class="text-primary text-center">Passport Information</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="PassportNumber_@i" class="form-label">Passport Number</label>
+                                <input type="text" class="form-control" id="PassportNumber_@i" name="Passengers[@i].PassportNumber" required />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="PassportIssuanceDate_@i" class="form-label">Passport Issuance Date</label>
+                                <input type="date" class="form-control" id="PassportIssuanceDate_@i" name="Passengers[@i].PassportIssuanceDate" required />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="PassportExpiryDate_@i" class="form-label">Passport Expiry Date</label>
+                                <input type="date" class="form-control" id="PassportExpiryDate_@i" name="Passengers[@i].PassportExpiryDate" required />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="PassportIssuanceLocation_@i" class="form-label">Passport Issuance Location</label>
+                                <input type="text" class="form-control" id="PassportIssuanceLocation_@i" name="Passengers[@i].PassportIssuanceLocation" required />
+                            </div>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="EmailAddress_@i" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="EmailAddress_@i" name="Passengers[@i].EmailAddress" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="PhoneNumber_@i" class="form-label">Phone Number</label>
+                                <input type="text" class="form-control" id="PhoneNumber_@i" name="Passengers[@i].PhoneNumber" required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+
+
+          <!-- Spinner (Initially hidden using Bootstrap d-none class) -->
+        <div id="spinner" class="d-none d-flex justify-content-center mt-4" style="z-index: 999;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        // Handle form submission with AJAX
+        $('#flightSearchForm').submit(function (event) {
+            event.preventDefault(); // Prevent default form submission
+            $('#spinner').removeClass('d-none').addClass('d-flex');  // Show the spinner
+
+            // Serialize form data
+            var formData = $(this).serialize();
+
+            // Perform AJAX request
+            $.ajax({
+                url: '@Url.Action("CreateTheBooking", "Flight")',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Handle the response (you can use this to show a success message or redirect)
+                    window.location.href = '/Flight/BookingConfirmed'; // Redirect to the view
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response
+                    alert('Error submitting the form. Please try again later.');
+                    console.log(xhr.responseText);
+                },
+                complete: function() {
+                        // Hide the spinner using Bootstrap's d-none class
+                        $('#spinner').removeClass('d-flex').addClass('d-none');
+                }
+            });
+        });
+    });
+    </script>
+
+}

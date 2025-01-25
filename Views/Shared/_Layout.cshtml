@@ -12,6 +12,7 @@
     <script type="importmap"></script>
     <link rel="icon" href="~/images/Saudi_fifa_cup.svg.webp" type="image/x-icon">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SaudiWorldCupHub.styles.css" asp-append-version="true" />
 </head>
@@ -20,35 +21,38 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/Saudi_fifa_cup.svg.webp" alt="Worldcup Logo" style="max-height: 40px;">
+                    <img src="~/images/Saudi_fifa_cup.svg.webp" alt="Worldcup Logo" style="max-height: 50px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between ms-2">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Flights">Flights</a>
+                            <a class="nav-link text-dark" asp-controller="Flight" asp-action="Flights" id="nav-flights">Flights</a>
                         </li>
+                        @* <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Hotels" id="nav-hotels">Hotels</a>
+                        </li> *@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Hotels">Hotels</a>
+                            <a class="nav-link text-dark" asp-controller="Flight" asp-action="BookingHistory" id="nav-flights">Bookings History</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Identity/Account/Logout">Logout</a>
+                                <a class="nav-link text-dark" href="/Identity/Account/Logout" id="nav-logout">Logout</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Identity/Account/Login">Login</a>
+                                <a class="nav-link text-dark" href="/Identity/Account/Login" id="nav-login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Identity/Account/Register">Register</a>
+                                <a class="nav-link text-dark" href="/Identity/Account/Register" id="nav-register">Register</a>
                             </li>
                         }
                     </ul>
@@ -57,9 +61,7 @@
         </nav>
     </header>
     <div class="continer-fluid">
-        <main role="main">
             @RenderBody()
-        </main>
     </div>
 
     <footer class="border-top footer text-muted">
@@ -71,5 +73,9 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+
+
+
 </body>
 </html>
