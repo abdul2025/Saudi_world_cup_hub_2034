@@ -7,9 +7,11 @@ Welcome to the **Saudi World Cup Hub 2034** project! This platform serves as a c
 ## Features
 
 - **Flight Booking**: Search and book flights to Saudi Arabia for the World Cup 2034 using the Amadeus API.
-- **Hotel Booking**: Search and book hotels in Saudi Arabia, including accommodations near World Cup stadiums and cultural landmarks.
 - **Booking History**: Track and view past flight and hotel bookings.
 - **Tourist Information**: Explore information about Saudi Arabia's culture, tourist destinations, infrastructure, and more.
+- **Login Auth**: Using the Microsoft.AspNetCore.Identity.EntityFrameworkCore.
+- **Dashboard for Admins Root/Dashboard**: For admins to Track and view past flight ...etc.
+
 
 ---
 
@@ -31,15 +33,12 @@ Welcome to the **Saudi World Cup Hub 2034** project! This platform serves as a c
 - The search results provide flight options with details such as flight number, departure and arrival cities, price, and departure date.
 - After selecting a flight, users can proceed with booking, and the booking is stored in the system for future reference.
 
-### 2. **Hotel Booking**
-- Users can search for hotels in different cities of Saudi Arabia, including cities hosting the World Cup matches.
-- Users can select the hotel, view detailed information, and proceed to book.
   
-### 3. **Booking History**
+### 2. **Booking History**
 - Authenticated users can view their past flight and hotel bookings.
 - All bookings are tracked, and users can view the details such as booking date, booking type (flight or hotel), and booking details.
 
-### 4. **Cultural and Tourist Information**
+### 3. **Cultural and Tourist Information**
 - The platform provides information about the key tourist destinations in Saudi Arabia, including historical sites, cultural experiences, and landmarks like Riyadh’s Kingdom Centre and the ancient Masmak Fort.
 - It highlights Saudi Arabia's investment in infrastructure to host the World Cup, such as state-of-the-art stadiums, transport systems, and other facilities.
 
