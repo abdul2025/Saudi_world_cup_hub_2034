@@ -18,7 +18,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/images/Saudi_fifa_cup.svg.webp" alt="Worldcup Logo" style="max-height: 50px;">
@@ -32,11 +32,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Flight" asp-action="Flights" id="nav-flights">Flights</a>
                         </li>
-                        @* <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Hotels" id="nav-hotels">Hotels</a>
-                        </li> *@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Flight" asp-action="BookingHistory" id="nav-flights">Bookings History</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Dashboard" asp-action="Index" id="nav-hotels">Dashboard</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">

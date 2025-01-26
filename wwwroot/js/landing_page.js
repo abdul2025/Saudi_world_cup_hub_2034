@@ -14,10 +14,10 @@ var x = setInterval(function() {
 
     // Display the result
     document.getElementById("countdown").innerHTML = 
-        "<span>" + days + " Days</span> " +
-        "<span>" + hours + " Hours</span> " +
-        "<span>" + minutes + " Minutes</span> " +
-        "<span>" + seconds + " Seconds</span>";
+    "<span style='font-size: 1rem;'>" + days + " Days</span> " +
+    "<span style='font-size: 1rem;'>" + hours + " Hours</span> " +
+    "<span style='font-size: 1rem;'>" + minutes + " Minutes</span> " +
+    "<span style='font-size: 1rem;'>" + seconds + " Seconds</span>";
 
     // If the countdown is over, display a message
     if (distance < 0) {

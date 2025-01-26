@@ -31,10 +31,39 @@ namespace SaudiWorldCupHub.Controllers
             var totalSum = await _context.Set<Bookings>().AsQueryable()
                 .SumAsync(b => b.Total);  // Use SumAsync for async execution
             
-            var recordCount = await _context.Set<Bookings>().CountAsync();
+
+            var averageBookingValue = await _context.Set<Bookings>().AsQueryable()
+                .AverageAsync(b => b.Total);
+
+            
+
+            var bookingsWithMultipleTravelers = await _context.Set<Bookings>()
+                .Where(b => b.Travelers.Count > 1)
+                .CountAsync();
+
+            
+            var avgTravelersPerBooking = await _context.Set<Bookings>()
+                .Select(b => b.Travelers.Count)
+                .AverageAsync();
+            
+            var totalTravelers = await _context.Set<Traveler>().CountAsync();
+            var totalBookings = await _context.Set<Bookings>().CountAsync();
+
+
+
+
 
             ViewBag.totalSum = totalSum;
-            ViewBag.recordCount = recordCount;
+            ViewBag.totalBookings = totalBookings;
+
+            ViewBag.totalTravelers = totalTravelers;
+            ViewBag.avgTravelersPerBooking = avgTravelersPerBooking.ToString("F2");
+
+
+            ViewBag.averageBookingValue = averageBookingValue.ToString("F2");
+            ViewBag.bookingsWithMultipleTravelers = bookingsWithMultipleTravelers;
+
+
 
             return View();
         }

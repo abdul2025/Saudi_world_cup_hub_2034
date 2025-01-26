@@ -4,20 +4,28 @@ body {
     color: #343a40;
 }
 .hero {
-    background-image: url('https://fifa34wc.oss-me-central-1.aliyuncs.com/wp-content/uploads/2024/07/11806-1.png');
+    background-image: url('https://www.milleworld.com/wp-content/uploads/2024/12/skysports-saudi-arabia-2034_6773093.jpg');
     background-size: cover;
     background-position: center;
     color: white;
-    padding: 100px 0;
+    padding: 300px 0;
     text-align: center;
 }
-.hero h1 {
-    font-size: 3.5rem;
-    font-weight: bold;
+
+
+
+/* Mobile view - Remove padding */
+@media (max-width: 768px) {
+    .hero {
+        padding: 0;
+    }
+
+    .hero h1 { 
+        font-size: 2.0rem;
+    }
 }
-.hero p {
-    font-size: 1.25rem;
-}
+
+
 .section {
     padding: 50px 0;
 }
@@ -109,15 +117,15 @@ body {
 @keyframes pulse {
     0% {
         transform: scale(1);
-        color: #3e3e3d;
+        color: #2f2f2e;
     }
     50% {
         transform: scale(1.1);
-        color: #666664;
+        color: #232323;
     }
     100% {
         transform: scale(1);
-        color: #484846;
+        color: #000000;
     }
 }
 

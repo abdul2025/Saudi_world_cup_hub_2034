@@ -5,7 +5,7 @@ Welcome to the **Saudi World Cup Hub 2034** project! This platform serves as a c
 ---
 
 ## Features
-
+- **Amadeus API for Flight Bookings UAT**: Amadeus API to Search and book flights Globally UAT ENV.
 - **Flight Booking**: Search and book flights to Saudi Arabia for the World Cup 2034 using the Amadeus API.
 - **Booking History**: Track and view past flight and hotel bookings.
 - **Tourist Information**: Explore information about Saudi Arabia's culture, tourist destinations, infrastructure, and more.

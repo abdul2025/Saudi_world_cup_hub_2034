@@ -26,9 +26,27 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="info-box7 l-bg-green order-info-box7">
                     <div class="info-box7-block">
-                        <h4 class="m-b-20">Confirmed Booking</h4>
+                        <h4 class="m-b-20">Revenue of Bookings</h4>
                         <h2 class="text-end"><i class="fas fa-plane float-start"></i><span>@ViewBag.totalSum $</span></h2>
-                        <p class="m-b-0">Number of Bookings : <strong> @ViewBag.recordCount </strong></p>
+                        <p class="m-b-0">Total Bookings <strong> @ViewBag.totalBookings </strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="info-box7 l-bg-purple order-info-box7">
+                    <div class="info-box7-block">
+                        <h4 class="m-b-20">Total Travelers</h4>
+                        <h2 class="text-end"><i class="fas fa-plane float-start"></i><span>@ViewBag.totalTravelers</span></h2>
+                        <p class="m-b-0">Avg Travelers Per Booking : <strong> @ViewBag.avgTravelersPerBooking </strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="info-box7 l-bg-orange order-info-box7">
+                    <div class="info-box7-block">
+                        <h4 class="m-b-20">Average Booking Value</h4>
+                        <h2 class="text-end"><i class="fas fa-chart-line float-start"></i><span>@ViewBag.averageBookingValue</span></h2>
+                        <p class="m-b-0">Bookings With Multiple Travelers <strong> @ViewBag.bookingsWithMultipleTravelers </strong></p>
                     </div>
                 </div>
             </div>
